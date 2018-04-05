@@ -287,10 +287,15 @@ extension ConversationViewController: MessagesDataSource {
     
     //既読ラベル
     func cellSideBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return NSAttributedString(string: "既読", attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+    }
+    
+    //時間ラベル
+    func cellTimeLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         struct ConversationDateFormatter {
             static let formatter: DateFormatter = {
                 let formatter = DateFormatter()
-//                formatter.dateStyle = .medium
+                //                formatter.dateStyle = .medium
                 formatter.locale = Locale(identifier: "en_US_POSIX")
                 formatter.dateFormat = "H:mm"
                 return formatter
@@ -298,14 +303,7 @@ extension ConversationViewController: MessagesDataSource {
         }
         let formatter = ConversationDateFormatter.formatter
         let dateString = formatter.string(from: message.sentDate)
-//        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
-        return NSAttributedString(string: "既読", attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
-    }
-    
-    func cellTimeLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let time = String(format: "%02d", indexPath.row)
-        
-        return NSAttributedString(string: "12:\(time)", attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
 
 }

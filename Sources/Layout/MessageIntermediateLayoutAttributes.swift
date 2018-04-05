@@ -171,7 +171,7 @@ final class MessageIntermediateLayoutAttributes {
         var origin: CGPoint = .zero
         
         //TODO:fix
-        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom + bottomLabelPadding.top - 22//sideBottomLabelSize.height - timeLabelSize.height
+        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom + bottomLabelPadding.top - sideBottomLabelSize.height - timeLabelSize.height - 2
         
         print("sideBottomLabelSize",sideBottomLabelSize)
         
