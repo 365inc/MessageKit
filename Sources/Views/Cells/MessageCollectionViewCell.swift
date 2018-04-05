@@ -50,6 +50,14 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         label.numberOfLines = 0
         return label
     }()
+    
+    //osuzuki
+    open var cellSideBottomLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor.red
+        label.numberOfLines = 0
+        return label
+    }()
 
     open weak var delegate: MessageCellDelegate?
 
@@ -68,6 +76,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         contentView.addSubview(avatarView)
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(cellBottomLabel)
+        contentView.addSubview(cellSideBottomLabel)//osuzuki
     }
 
     open override func prepareForReuse() {
@@ -76,6 +85,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         cellTopLabel.attributedText = nil
         cellBottomLabel.text = nil
         cellBottomLabel.attributedText = nil
+        cellSideBottomLabel.text = nil
+        cellSideBottomLabel.attributedText = nil//osuzuki
     }
 
     // MARK: - Configuration
@@ -86,6 +97,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
             avatarView.frame = attributes.avatarFrame
             cellTopLabel.frame = attributes.topLabelFrame
             cellBottomLabel.frame = attributes.bottomLabelFrame
+            cellSideBottomLabel.frame = attributes.sideBottomLabelFrame//osuzuki
             messageContainerView.frame = attributes.messageContainerFrame
         }
     }
@@ -110,9 +122,11 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
         let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
-
+        let sideBottomText = dataSource.cellSideBottomLabelAttributedText(for: message, at: indexPath)
+        
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
+        cellSideBottomLabel.attributedText = sideBottomText
     }
 
     /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....

@@ -158,6 +158,43 @@ final class MessageIntermediateLayoutAttributes {
 
     }()
     
+    //TODO:osuzuki added
+    // Cell Side Bottom Side Label
+    var sideBottomLabelAlignment: LabelAlignment = .cellTrailing(.zero)
+    var sideBottomLabelSize: CGSize = .zero
+    var sideBottomLabelMaxWidth: CGFloat = 0
+    
+    lazy var sideBottomLabelFrame: CGRect = {
+        
+        guard sideBottomLabelSize != .zero else { return .zero }
+        
+        var origin: CGPoint = .zero
+        
+        //TODO:fix
+        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom + bottomLabelPadding.top - 22
+        
+        //TODO:fix
+        switch sideBottomLabelAlignment {
+//        case .cellLeading:
+//            origin.x = bottomLabelPadding.left
+//        case .cellCenter:
+//            origin.x = (cellFrame.width/2) + bottomLabelPadding.left - bottomLabelPadding.right
+//        case .cellTrailing:
+//            origin.x = cellFrame.width - bottomLabelSize.width - bottomLabelPadding.right
+        case .messageLeading:
+            //バブルの左側（自分の場合）
+            origin.x = messageContainerFrame.minX - 50
+        case .messageTrailing:
+            //バブルの右側（相手の場合）
+            origin.x = messageContainerFrame.maxX
+        default:
+            origin.x = messageContainerFrame.minX - 50
+        }
+    
+        return CGRect(origin: origin, size: sideBottomLabelSize)
+        
+    }()
+    
     // MARK: - Initializer
     
     init(message: MessageType, indexPath: IndexPath) {

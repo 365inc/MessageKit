@@ -274,18 +274,32 @@ extension ConversationViewController: MessagesDataSource {
         return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
     }
 
+    //TODO:osuzuki 相手のみユーザー名表示
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         
+        if isFromCurrentSender(message: message) {
+            return nil
+        } else {
+            let name = message.sender.displayName
+            return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        }
+    }
+    
+    //既読ラベル
+    func cellSideBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         struct ConversationDateFormatter {
             static let formatter: DateFormatter = {
                 let formatter = DateFormatter()
-                formatter.dateStyle = .medium
+//                formatter.dateStyle = .medium
+                formatter.locale = Locale(identifier: "en_US_POSIX")
+                formatter.dateFormat = "H:mm"
                 return formatter
             }()
         }
         let formatter = ConversationDateFormatter.formatter
         let dateString = formatter.string(from: message.sentDate)
-        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+//        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        return NSAttributedString(string: "既読", attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
 
 }
@@ -379,10 +393,20 @@ extension ConversationViewController: MessagesLayoutDelegate {
 
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         if isFromCurrentSender(message: message) {
-            return .messageLeading(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+            return .cellTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         } else {
-            return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+//            print(message.messageId,message.sender,message.data, message.sentDate)
+            return .cellLeading(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         }
+    }
+    
+    func cellSideBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        if isFromCurrentSender(message: message) {
+            return .messageLeading(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        } else {
+            return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        }
+        
     }
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {

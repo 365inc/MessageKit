@@ -35,9 +35,11 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var messageContainerFrame: CGRect = .zero
     var messageLabelInsets: UIEdgeInsets = .zero
 
+    //TODO:osuzuki sideBottomLabelFrame追加
     var topLabelFrame: CGRect = .zero
     var bottomLabelFrame: CGRect = .zero
-
+    var sideBottomLabelFrame: CGRect = .zero
+    
     // MARK: - Methods
 
     override func copy(with zone: NSZone? = nil) -> Any {
@@ -49,6 +51,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.messageLabelInsets = messageLabelInsets
         copy.topLabelFrame = topLabelFrame
         copy.bottomLabelFrame = bottomLabelFrame
+        copy.sideBottomLabelFrame = sideBottomLabelFrame//osuzuki
         return copy
         // swiftlint:enable force_cast
     }
