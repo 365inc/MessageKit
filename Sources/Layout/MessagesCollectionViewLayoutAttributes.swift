@@ -35,10 +35,11 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var messageContainerFrame: CGRect = .zero
     var messageLabelInsets: UIEdgeInsets = .zero
 
-    //TODO:osuzuki sideBottomLabelFrame追加
+    //osuzuki
     var topLabelFrame: CGRect = .zero
     var bottomLabelFrame: CGRect = .zero
     var sideBottomLabelFrame: CGRect = .zero
+    var timeLabelFrame: CGRect = .zero
     
     // MARK: - Methods
 
@@ -52,6 +53,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.topLabelFrame = topLabelFrame
         copy.bottomLabelFrame = bottomLabelFrame
         copy.sideBottomLabelFrame = sideBottomLabelFrame//osuzuki
+        copy.timeLabelFrame = timeLabelFrame//osuzuki
         return copy
         // swiftlint:enable force_cast
     }

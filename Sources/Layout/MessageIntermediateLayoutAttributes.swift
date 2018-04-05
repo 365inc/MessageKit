@@ -158,8 +158,8 @@ final class MessageIntermediateLayoutAttributes {
 
     }()
     
-    //TODO:osuzuki added
-    // Cell Side Bottom Side Label
+    //osuzuki added
+    // Cell Side Bottom Side Label(既読ラベル)
     var sideBottomLabelAlignment: LabelAlignment = .cellTrailing(.zero)
     var sideBottomLabelSize: CGSize = .zero
     var sideBottomLabelMaxWidth: CGFloat = 0
@@ -171,7 +171,9 @@ final class MessageIntermediateLayoutAttributes {
         var origin: CGPoint = .zero
         
         //TODO:fix
-        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom + bottomLabelPadding.top - 22
+        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom + bottomLabelPadding.top - 22//sideBottomLabelSize.height - timeLabelSize.height
+        
+        print("sideBottomLabelSize",sideBottomLabelSize)
         
         //TODO:fix
         switch sideBottomLabelAlignment {
@@ -192,6 +194,42 @@ final class MessageIntermediateLayoutAttributes {
         }
     
         return CGRect(origin: origin, size: sideBottomLabelSize)
+        
+    }()
+    
+    //osuzuki
+    // Cell Time Label(時間ラベル)
+    var timeLabelAlignment: LabelAlignment = .cellTrailing(.zero)
+    var timeLabelSize: CGSize = .zero
+    var timeLabelMaxWidth: CGFloat = 0
+    
+    lazy var timeLabelFrame: CGRect = {
+        
+        guard timeLabelSize != .zero else { return .zero }
+        
+        var origin: CGPoint = .zero
+        
+        //TODO:fix
+        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom - timeLabelSize.height
+        
+        switch timeLabelAlignment {
+//        case .cellLeading:
+//            origin.x = bottomLabelPadding.left
+//        case .cellCenter:
+//            origin.x = (cellFrame.width/2) + bottomLabelPadding.left - bottomLabelPadding.right
+//        case .cellTrailing:
+//            origin.x = cellFrame.width - bottomLabelSize.width - bottomLabelPadding.right
+        case .messageLeading:
+            //バブルの左側（自分の場合）
+            origin.x = messageContainerFrame.minX - timeLabelSize.width - 3
+        case .messageTrailing:
+            //バブルの右側（相手の場合）
+            origin.x = messageContainerFrame.maxX + 3
+        default:
+            origin.x = messageContainerFrame.minX - timeLabelSize.width - 3
+        }
+        
+        return CGRect(origin: origin, size: timeLabelSize)
         
     }()
     

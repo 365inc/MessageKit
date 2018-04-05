@@ -58,6 +58,14 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         label.numberOfLines = 0
         return label
     }()
+    
+    //osuzuki
+    open var cellTimeLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor.blue
+        label.numberOfLines = 0
+        return label
+    }()
 
     open weak var delegate: MessageCellDelegate?
 
@@ -77,6 +85,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(cellBottomLabel)
         contentView.addSubview(cellSideBottomLabel)//osuzuki
+        contentView.addSubview(cellTimeLabel)//osuzuki
     }
 
     open override func prepareForReuse() {
@@ -87,6 +96,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         cellBottomLabel.attributedText = nil
         cellSideBottomLabel.text = nil
         cellSideBottomLabel.attributedText = nil//osuzuki
+        cellTimeLabel.text = nil
+        cellTimeLabel.attributedText = nil//osuzuki
     }
 
     // MARK: - Configuration
@@ -98,6 +109,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
             cellTopLabel.frame = attributes.topLabelFrame
             cellBottomLabel.frame = attributes.bottomLabelFrame
             cellSideBottomLabel.frame = attributes.sideBottomLabelFrame//osuzuki
+            cellTimeLabel.frame = attributes.timeLabelFrame//osuzuki
             messageContainerView.frame = attributes.messageContainerFrame
         }
     }
@@ -123,10 +135,12 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
         let sideBottomText = dataSource.cellSideBottomLabelAttributedText(for: message, at: indexPath)
+        let timeText = dataSource.cellTimeLabelAttributedText(for: message, at: indexPath)
         
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
         cellSideBottomLabel.attributedText = sideBottomText
+        cellTimeLabel.attributedText = timeText
     }
 
     /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....

@@ -254,6 +254,12 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.sideBottomLabelMaxWidth = cellSideBottomLabelMaxWidth(for: attributes)
         attributes.sideBottomLabelSize = cellSideBottomLabelSize(for: attributes)
         
+        //osuzuki
+        // Cell Time Label
+        attributes.timeLabelAlignment = cellTimeLabelAlignment(for: attributes)
+        attributes.timeLabelMaxWidth = cellTimeLabelMaxWidth(for: attributes)
+        attributes.timeLabelSize = cellTimeLabelSize(for: attributes)
+        
         // Cell Top Label
         attributes.topLabelAlignment = cellTopLabelAlignment(for: attributes)
         attributes.topLabelMaxWidth = cellTopLabelMaxWidth(for: attributes)
@@ -280,6 +286,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.topLabelFrame = intermediateAttributes.topLabelFrame
         attributes.bottomLabelFrame = intermediateAttributes.bottomLabelFrame
         attributes.sideBottomLabelFrame = intermediateAttributes.sideBottomLabelFrame//osuzuki
+        attributes.timeLabelFrame = intermediateAttributes.timeLabelFrame//osuzuki
         attributes.avatarFrame = intermediateAttributes.avatarFrame
         attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
         
@@ -568,7 +575,49 @@ private extension MessagesCollectionViewFlowLayout {
         let text = messagesDataSource.cellSideBottomLabelAttributedText(for: attributes.message, at: attributes.indexPath)
         
         guard let bottomLabelText = text else { return .zero }
-        return labelSize(for: bottomLabelText, considering: attributes.bottomLabelMaxWidth)
+        return labelSize(for: bottomLabelText, considering: attributes.sideBottomLabelMaxWidth)
+    }
+    
+}
+
+
+//osuzuki
+// MARK: - Cell Time Label Calculations  [ ZZ - ZZ ]
+
+private extension MessagesCollectionViewFlowLayout {
+    
+    // ZZ
+    
+    /// Returns the alignment of the cell's bottom label.
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
+    func cellTimeLabelAlignment(for attributes: MessageIntermediateLayoutAttributes) -> LabelAlignment {
+        return messagesLayoutDelegate.cellTimeLabelAlignment(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
+    }
+    
+    // ZZ
+    
+    /// Returns the max available width for the cell's bottom label considering the specified layout information.
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating the max width.
+    func cellTimeLabelMaxWidth(for attributes: MessageIntermediateLayoutAttributes) -> CGFloat {
+        return 44
+    }
+    
+    // ZZ
+    
+    /// Returns the size of the cell's bottom label considering the specified layout information.
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating label's size.
+    func cellTimeLabelSize(for attributes: MessageIntermediateLayoutAttributes) -> CGSize {
+        
+        let text = messagesDataSource.cellTimeLabelAttributedText(for: attributes.message, at: attributes.indexPath)
+        
+        guard let bottomLabelText = text else { return .zero }
+        return labelSize(for: bottomLabelText, considering: attributes.timeLabelMaxWidth)
     }
     
 }

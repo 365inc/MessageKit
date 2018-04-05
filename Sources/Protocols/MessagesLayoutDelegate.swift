@@ -85,19 +85,12 @@ public protocol MessagesLayoutDelegate: AnyObject {
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
     
     //osuzuki
-    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s bottom label.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method is determined by the messages `Sender`:
-    ///
-    /// Current Sender: .messageLeading(.zero)
-    ///
-    /// All other senders: .messageTrailing(.zero)
+    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s side bottom label.
     func cellSideBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
+    
+    //osuzuki
+    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s time label.
+    func cellTimeLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
 
     /// Specifies the size of the `AvatarView` in a `MessageCollectionViewCell`.
     ///
@@ -225,6 +218,22 @@ public extension MessagesLayoutDelegate {
     }
 
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
+    }
+    
+    //osuzuki
+    func cellSideBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
+    }
+    
+    //osuzuki
+    func cellTimeLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }

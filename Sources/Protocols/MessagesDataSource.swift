@@ -76,6 +76,9 @@ public protocol MessagesDataSource: AnyObject {
     /// The attributed text to be used for cell's side bottom label.
     func cellSideBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
     
+    //osuzuki
+    /// The attributed text to be used for cell's time label.
+    func cellTimeLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
 
 }
 
@@ -94,6 +97,10 @@ public extension MessagesDataSource {
     }
     
     func cellSideBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return nil
+    }
+    
+    func cellTimeLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
     }
 

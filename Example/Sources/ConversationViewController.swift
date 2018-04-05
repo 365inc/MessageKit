@@ -301,6 +301,12 @@ extension ConversationViewController: MessagesDataSource {
 //        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
         return NSAttributedString(string: "既読", attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
+    
+    func cellTimeLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let time = String(format: "%02d", indexPath.row)
+        
+        return NSAttributedString(string: "12:\(time)", attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+    }
 
 }
 
@@ -406,7 +412,14 @@ extension ConversationViewController: MessagesLayoutDelegate {
         } else {
             return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         }
-        
+    }
+    
+    func cellTimeLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        if isFromCurrentSender(message: message) {
+            return .messageLeading(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        } else {
+            return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        }
     }
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
