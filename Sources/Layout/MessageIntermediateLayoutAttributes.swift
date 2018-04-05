@@ -183,12 +183,12 @@ final class MessageIntermediateLayoutAttributes {
 //            origin.x = cellFrame.width - bottomLabelSize.width - bottomLabelPadding.right
         case .messageLeading:
             //バブルの左側（自分の場合）
-            origin.x = messageContainerFrame.minX - 50
+            origin.x = messageContainerFrame.minX - sideBottomLabelSize.width - 3
         case .messageTrailing:
             //バブルの右側（相手の場合）
-            origin.x = messageContainerFrame.maxX
+            origin.x = messageContainerFrame.maxX + 3
         default:
-            origin.x = messageContainerFrame.minX - 50
+            origin.x = messageContainerFrame.minX - sideBottomLabelSize.width - 3
         }
     
         return CGRect(origin: origin, size: sideBottomLabelSize)
