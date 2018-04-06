@@ -162,6 +162,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
                 cellFavoriteButton.setImage(buttonImages[2], for: .selected)
             }
             cellFavoriteButton.addTarget(self, action: #selector(MessageCollectionViewCell.didPushFavoriteButton(sender:)), for: .touchUpInside)
+            cellFavoriteButton.isSelected = dataSource.cellIsFavorite(for: message, at: indexPath)
         }
     }
     

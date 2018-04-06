@@ -297,7 +297,6 @@ extension ConversationViewController: MessagesDataSource {
         } else {
             return NSAttributedString(string: "")
         }
-        
     }
     
     //時間ラベル
@@ -442,6 +441,14 @@ extension ConversationViewController: MessagesLayoutDelegate {
             return nil
         } else {
             return [#imageLiteral(resourceName: "ic_star_off"), #imageLiteral(resourceName: "ic_star_on")]
+        }
+    }
+    
+    func cellIsFavorite(for message: MessageType, at indexPath: IndexPath) -> Bool {
+        if isFromCurrentSender(message: message) {
+            return false
+        } else {
+            return indexPath.section % 3 == 0
         }
     }
 

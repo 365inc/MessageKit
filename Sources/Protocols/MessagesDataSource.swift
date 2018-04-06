@@ -84,6 +84,9 @@ public protocol MessagesDataSource: AnyObject {
     /// The favorite button images to be used for cell's favorite button
     func cellFavoriteButtonImages(for message: MessageType, at indexPath: IndexPath) -> [UIImage]?
 
+    //osuzuki
+    /// The favorite button selected flag to be used for cell's favorite button
+    func cellIsFavorite(for message: MessageType, at indexPath: IndexPath) -> Bool
 }
 
 public extension MessagesDataSource {
@@ -110,6 +113,10 @@ public extension MessagesDataSource {
     
     func cellFavoriteButtonImages(for message: MessageType, at indexPath: IndexPath) -> [UIImage]? {
         return nil
+    }
+    
+    func cellIsFavorite(for message: MessageType, at indexPath: IndexPath) -> Bool {
+        return false
     }
 
 }
