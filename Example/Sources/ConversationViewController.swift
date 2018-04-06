@@ -62,6 +62,10 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(ConversationViewController.loadMoreMessages), for: .valueChanged)
         
+        let imageView = UIImageView(frame: CGRect(origin: CGPoint.zero, size: UIScreen.main.bounds.size))
+        imageView.image = #imageLiteral(resourceName: "bg_line_chat")
+        self.messagesCollectionView.backgroundView = imageView
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
                             style: .plain,
@@ -270,8 +274,9 @@ extension ConversationViewController: MessagesDataSource {
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let name = message.sender.displayName
-        return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        return nil
+//        let name = message.sender.displayName
+//        return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
     }
 
     //TODO:osuzuki 相手のみユーザー名表示
@@ -281,13 +286,18 @@ extension ConversationViewController: MessagesDataSource {
             return nil
         } else {
             let name = message.sender.displayName
-            return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
+            return NSMutableAttributedString(string: name).addCustomFontColorAttribute()
         }
     }
     
     //既読ラベル
     func cellSideBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        return NSAttributedString(string: "既読", attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        if isFromCurrentSender(message: message) {
+            return NSMutableAttributedString(string: "既読").addCustomFontColorAttribute()
+        } else {
+            return NSAttributedString(string: "")
+        }
+        
     }
     
     //時間ラベル
@@ -303,7 +313,7 @@ extension ConversationViewController: MessagesDataSource {
         }
         let formatter = ConversationDateFormatter.formatter
         let dateString = formatter.string(from: message.sentDate)
-        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        return NSMutableAttributedString(string: dateString).addCustomFontColorAttribute()
     }
 
 }
@@ -508,4 +518,20 @@ extension ConversationViewController: MessageInputBarDelegate {
         messagesCollectionView.scrollToBottom()
     }
 
+}
+
+
+extension NSMutableAttributedString {
+    func addCustomFontColorAttribute() -> NSMutableAttributedString {
+        self.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white, range: NSMakeRange(0, self.length))
+        self.addAttribute(NSAttributedStringKey.font, value: UIFont.preferredFont(forTextStyle: .caption2), range: NSMakeRange(0, self.length))
+        return self
+    }
+    
+    func addCustomFont() -> NSMutableAttributedString {
+        //背景と文字間にスペースを置く。そのスペースの調整。
+        //default: bold 12pt
+        self.addAttribute(NSAttributedStringKey.font, value: UIFont.boldSystemFont(ofSize: 7), range: NSMakeRange(0, 1))
+        return self
+    }
 }

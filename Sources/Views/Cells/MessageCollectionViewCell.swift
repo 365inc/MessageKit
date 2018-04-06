@@ -51,18 +51,16 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         return label
     }()
     
-    //osuzuki
+    //osuzuki create label
     open var cellSideBottomLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = UIColor.red
         label.numberOfLines = 0
         return label
     }()
     
-    //osuzuki
+    //osuzuki create label
     open var cellTimeLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = UIColor.blue
         label.numberOfLines = 0
         return label
     }()
