@@ -476,7 +476,10 @@ extension ConversationViewController: MessageCellDelegate {
     func didTapBottomLabel(in cell: MessageCollectionViewCell) {
         print("Bottom label tapped")
     }
-
+    
+    func didPushFavoriteButton(in cell: MessageCollectionViewCell, button: UIButton) {
+        button.isSelected = !button.isSelected
+    }
 }
 
 // MARK: - MessageLabelDelegate
@@ -498,7 +501,7 @@ extension ConversationViewController: MessageLabelDelegate {
     func didSelectURL(_ url: URL) {
         print("URL Selected: \(url)")
     }
-
+    
 }
 
 // MARK: - MessageInputBarDelegate

@@ -149,6 +149,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
+        //osuzuki
         cellSideBottomLabel.attributedText = sideBottomText
         cellTimeLabel.attributedText = timeText
         if let buttonImages = buttonImages {
@@ -160,7 +161,12 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
                 cellFavoriteButton.setImage(buttonImages[1], for: .highlighted)
                 cellFavoriteButton.setImage(buttonImages[2], for: .selected)
             }
+            cellFavoriteButton.addTarget(self, action: #selector(MessageCollectionViewCell.didPushFavoriteButton(sender:)), for: .touchUpInside)
         }
+    }
+    
+    @objc func didPushFavoriteButton(sender: UIButton) {
+        delegate?.didPushFavoriteButton(in: self, button: sender)
     }
 
     /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....

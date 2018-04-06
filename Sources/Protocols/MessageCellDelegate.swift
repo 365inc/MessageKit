@@ -66,7 +66,17 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didTapTopLabel(in cell: MessageCollectionViewCell)
-
+    
+    /// Triggered when pushing the favorite button
+    ///
+    /// - Parameters:
+    ///   - cell: The cell where the touch occurred.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didPushFavoriteButton(in cell: MessageCollectionViewCell, button: UIButton)
+    
 }
 
 public extension MessageCellDelegate {
@@ -78,5 +88,7 @@ public extension MessageCellDelegate {
     func didTapBottomLabel(in cell: MessageCollectionViewCell) {}
 
     func didTapTopLabel(in cell: MessageCollectionViewCell) {}
-
+    
+    func didPushFavoriteButton(in cell: MessageCollectionViewCell, button: UIButton) {}
+    
 }
