@@ -305,7 +305,6 @@ extension ConversationViewController: MessagesDataSource {
         struct ConversationDateFormatter {
             static let formatter: DateFormatter = {
                 let formatter = DateFormatter()
-                //                formatter.dateStyle = .medium
                 formatter.locale = Locale(identifier: "en_US_POSIX")
                 formatter.dateFormat = "H:mm"
                 return formatter
@@ -429,9 +428,24 @@ extension ConversationViewController: MessagesLayoutDelegate {
             return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         }
     }
+    
+    func cellFavoriteButtonAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        if isFromCurrentSender(message: message) {
+            return .messageLeading(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        } else {
+            return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        }
+    }
+    
+    func cellFavoriteButtonImages(for message: MessageType, at indexPath: IndexPath) -> [UIImage]? {
+        if isFromCurrentSender(message: message) {
+            return nil
+        } else {
+            return [#imageLiteral(resourceName: "ic_star_off"), #imageLiteral(resourceName: "ic_star_on")]
+        }
+    }
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
     }
 

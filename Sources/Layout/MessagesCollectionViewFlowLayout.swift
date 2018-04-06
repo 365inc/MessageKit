@@ -260,6 +260,12 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.timeLabelMaxWidth = cellTimeLabelMaxWidth(for: attributes)
         attributes.timeLabelSize = cellTimeLabelSize(for: attributes)
         
+        //osuzuki
+        // Favorite Button
+        attributes.favoriteButtonAlignment = cellFavoriteButtonAlignment(for: attributes)
+        attributes.favoriteButtonMaxWidth = cellFavoriteButtonMaxWidth(for: attributes)
+        attributes.favoriteButtonSize = cellFavoriteButtonSize(for: attributes)
+        
         // Cell Top Label
         attributes.topLabelAlignment = cellTopLabelAlignment(for: attributes)
         attributes.topLabelMaxWidth = cellTopLabelMaxWidth(for: attributes)
@@ -287,6 +293,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.bottomLabelFrame = intermediateAttributes.bottomLabelFrame
         attributes.sideBottomLabelFrame = intermediateAttributes.sideBottomLabelFrame//osuzuki
         attributes.timeLabelFrame = intermediateAttributes.timeLabelFrame//osuzuki
+        attributes.favoriteButtonFrame = intermediateAttributes.favoriteButtonFrame//osuzuki
         attributes.avatarFrame = intermediateAttributes.avatarFrame
         attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
         
@@ -619,7 +626,42 @@ private extension MessagesCollectionViewFlowLayout {
         guard let bottomLabelText = text else { return .zero }
         return labelSize(for: bottomLabelText, considering: attributes.timeLabelMaxWidth)
     }
+}
+
+//osuzuki
+// MARK: - Cell Favorite Button Calculations  [ ZZ - ZZ ]
+
+private extension MessagesCollectionViewFlowLayout {
     
+    // ZZ
+    
+    /// Returns the alignment of the cell's favorite button.
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
+    func cellFavoriteButtonAlignment(for attributes: MessageIntermediateLayoutAttributes) -> LabelAlignment {
+        return messagesLayoutDelegate.cellFavoriteButtonAlignment(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
+    }
+    
+    // ZZ
+    
+    /// Returns the max available width for the cell's favorite button
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating the max width.
+    func cellFavoriteButtonMaxWidth(for attributes: MessageIntermediateLayoutAttributes) -> CGFloat {
+        return 44
+    }
+    
+    // ZZ
+    
+    /// Returns the size of the cell's favorite button
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating label's size.
+    func cellFavoriteButtonSize(for attributes: MessageIntermediateLayoutAttributes) -> CGSize {
+        return CGSize(width: 24, height: 24)
+    }
 }
 
 // MARK: - Cell Top Label Size Calculations [ L - N ]

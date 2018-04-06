@@ -171,9 +171,8 @@ final class MessageIntermediateLayoutAttributes {
         var origin: CGPoint = .zero
         
         //TODO:fix
-        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom + bottomLabelPadding.top - sideBottomLabelSize.height - timeLabelSize.height - 2
-        
-        print("sideBottomLabelSize",sideBottomLabelSize)
+        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom
+            + bottomLabelPadding.top - sideBottomLabelSize.height - timeLabelSize.height - 2
         
         //TODO:fix
         switch sideBottomLabelAlignment {
@@ -194,7 +193,6 @@ final class MessageIntermediateLayoutAttributes {
         }
     
         return CGRect(origin: origin, size: sideBottomLabelSize)
-        
     }()
     
     //osuzuki
@@ -230,7 +228,37 @@ final class MessageIntermediateLayoutAttributes {
         }
         
         return CGRect(origin: origin, size: timeLabelSize)
+    }()
+    
+    //osuzuki
+    // Favorite Button (お気に入りボタン)
+    var favoriteButtonAlignment: LabelAlignment = .cellTrailing(.zero)
+    var favoriteButtonSize: CGSize = .zero
+    var favoriteButtonMaxWidth: CGFloat = 0
+    
+    lazy var favoriteButtonFrame: CGRect = {
         
+        guard favoriteButtonSize != .zero else { return .zero }
+        
+        var origin: CGPoint = .zero
+        
+        //24x24
+        //TODO:fix
+        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom
+            + bottomLabelPadding.top - favoriteButtonSize.height - timeLabelSize.height - 2
+        
+        switch timeLabelAlignment {
+        case .messageLeading:
+            //バブルの左側（自分の場合）
+            origin.x = messageContainerFrame.minX - favoriteButtonSize.width - 3
+        case .messageTrailing:
+            //バブルの右側（相手の場合）
+            origin.x = messageContainerFrame.maxX + 3
+        default:
+            origin.x = messageContainerFrame.minX - favoriteButtonSize.width - 3
+        }
+        
+        return CGRect(origin: origin, size: favoriteButtonSize)
     }()
     
     // MARK: - Initializer

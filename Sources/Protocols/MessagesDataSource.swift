@@ -79,6 +79,10 @@ public protocol MessagesDataSource: AnyObject {
     //osuzuki
     /// The attributed text to be used for cell's time label.
     func cellTimeLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
+    
+    //osuzuki
+    /// The favorite button images to be used for cell's favorite button
+    func cellFavoriteButtonImages(for message: MessageType, at indexPath: IndexPath) -> [UIImage]?
 
 }
 
@@ -101,6 +105,10 @@ public extension MessagesDataSource {
     }
     
     func cellTimeLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return nil
+    }
+    
+    func cellFavoriteButtonImages(for message: MessageType, at indexPath: IndexPath) -> [UIImage]? {
         return nil
     }
 

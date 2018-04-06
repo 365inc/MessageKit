@@ -91,6 +91,10 @@ public protocol MessagesLayoutDelegate: AnyObject {
     //osuzuki
     /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s time label.
     func cellTimeLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
+    
+    //osuzuki
+    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s favorite Button
+    func cellFavoriteButtonAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
 
     /// Specifies the size of the `AvatarView` in a `MessageCollectionViewCell`.
     ///

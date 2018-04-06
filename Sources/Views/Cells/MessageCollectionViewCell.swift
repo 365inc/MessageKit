@@ -64,6 +64,12 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         label.numberOfLines = 0
         return label
     }()
+    
+    //osuzuki create favorite button
+    open var cellFavoriteButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
 
     open weak var delegate: MessageCellDelegate?
 
@@ -84,6 +90,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         contentView.addSubview(cellBottomLabel)
         contentView.addSubview(cellSideBottomLabel)//osuzuki
         contentView.addSubview(cellTimeLabel)//osuzuki
+        contentView.addSubview(cellFavoriteButton)//osuzuki
     }
 
     open override func prepareForReuse() {
@@ -96,6 +103,9 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         cellSideBottomLabel.attributedText = nil//osuzuki
         cellTimeLabel.text = nil
         cellTimeLabel.attributedText = nil//osuzuki
+        cellFavoriteButton.setImage(UIImage(), for: .normal)
+//        cellFavoriteButton.setImage(UIImage(), for: .highlighted)f
+        cellFavoriteButton.setImage(UIImage(), for: .selected)
     }
 
     // MARK: - Configuration
@@ -108,6 +118,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
             cellBottomLabel.frame = attributes.bottomLabelFrame
             cellSideBottomLabel.frame = attributes.sideBottomLabelFrame//osuzuki
             cellTimeLabel.frame = attributes.timeLabelFrame//osuzuki
+            cellFavoriteButton.frame = attributes.favoriteButtonFrame//osuzuki
             messageContainerView.frame = attributes.messageContainerFrame
         }
     }
@@ -134,11 +145,22 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
         let sideBottomText = dataSource.cellSideBottomLabelAttributedText(for: message, at: indexPath)
         let timeText = dataSource.cellTimeLabelAttributedText(for: message, at: indexPath)
+        let buttonImages = dataSource.cellFavoriteButtonImages(for: message, at: indexPath)
         
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
         cellSideBottomLabel.attributedText = sideBottomText
         cellTimeLabel.attributedText = timeText
+        if let buttonImages = buttonImages {
+            if buttonImages.count == 2 {
+                cellFavoriteButton.setImage(buttonImages[0], for: .normal)
+                cellFavoriteButton.setImage(buttonImages[1], for: .selected)
+            } else if buttonImages.count > 2 {
+                cellFavoriteButton.setImage(buttonImages[0], for: .normal)
+                cellFavoriteButton.setImage(buttonImages[1], for: .highlighted)
+                cellFavoriteButton.setImage(buttonImages[2], for: .selected)
+            }
+        }
     }
 
     /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....

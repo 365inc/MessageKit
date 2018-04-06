@@ -40,6 +40,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var bottomLabelFrame: CGRect = .zero
     var sideBottomLabelFrame: CGRect = .zero
     var timeLabelFrame: CGRect = .zero
+    var favoriteButtonFrame: CGRect = .zero
     
     // MARK: - Methods
 
@@ -54,6 +55,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.bottomLabelFrame = bottomLabelFrame
         copy.sideBottomLabelFrame = sideBottomLabelFrame//osuzuki
         copy.timeLabelFrame = timeLabelFrame//osuzuki
+        copy.favoriteButtonFrame = favoriteButtonFrame//osuzuki
         return copy
         // swiftlint:enable force_cast
     }
