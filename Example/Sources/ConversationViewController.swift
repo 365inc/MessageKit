@@ -293,7 +293,11 @@ extension ConversationViewController: MessagesDataSource {
     //既読ラベル
     func cellSideBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if isFromCurrentSender(message: message) {
-            return NSMutableAttributedString(string: "既読").addCustomFontColorAttribute()
+            if indexPath.section%2 == 0 {
+                return NSMutableAttributedString(string: "既読88").addCustomFontColorAttribute()
+            }else{
+                return NSMutableAttributedString(string: "既読").addCustomFontColorAttribute()
+            }
         } else {
             return NSAttributedString(string: "")
         }
