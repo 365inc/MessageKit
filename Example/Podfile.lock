@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MessageKit: a387efa6a3887e3de9819b7c7d49eda153396961
+  MessageKit: 9eae9ccd23a9bcd7d8aab58ae98acac6f7071e8d
 
 PODFILE CHECKSUM: cecdb7bc8129cf99f66de9f68eea3256fec30c3d
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0
