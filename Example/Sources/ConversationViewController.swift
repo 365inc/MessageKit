@@ -213,17 +213,31 @@ class ConversationViewController: MessagesViewController {
     func sanrokugo() {
         defaultStyle()
         
-        let items = [
-            makeButton(named: "ic_add_file")
-        ]
-        items.forEach { $0.tintColor = .lightGray }
+        let fileButton = InputBarButtonItem()
+            .configure {
+                $0.spacing = .fixed(10)
+                $0.image = UIImage(named: "ic_add_file")?.withRenderingMode(.alwaysTemplate)
+                $0.setSize(CGSize(width: 30, height: 30), animated: true)
+                $0.tintColor = UIColor.lightGray
+            }.onSelected {
+                $0.tintColor = UIColor.gray
+            }.onDeselected {
+                $0.tintColor = UIColor.lightGray
+            }.onTouchUpInside { _ in
+                print("Item Tapped")
+        }
         
-        messageInputBar.padding = UIEdgeInsets(top: 6, left: 2, bottom: 6, right: 6)
+        messageInputBar.inputTextView.placeholder = ""
+        messageInputBar.sendButton.setTitle("送信", for: .normal)
+        messageInputBar.padding = UIEdgeInsets(top: 6, left: 2, bottom: 6, right: 0)
         messageInputBar.isTranslucent = false
         messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.separatorLine.isHidden = true
-        messageInputBar.setLeftStackViewWidthConstant(to: 32, animated: true)
-        messageInputBar.setStackViewItems(items, forStack: .left, animated: true)
+        messageInputBar.setLeftStackViewWidthConstant(to: 32, animated: false)
+        messageInputBar.setStackViewItems([fileButton], forStack: .left, animated: false)
+        messageInputBar.textViewPadding.right = 0
+        
+        
     }
     
     func iMessage() {
