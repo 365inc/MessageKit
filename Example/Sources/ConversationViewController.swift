@@ -134,6 +134,11 @@ class ConversationViewController: MessagesViewController {
                     self.iMessage()
                 })
             }),
+            UIAlertAction(title: "365", style: .default, handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                    self.sanrokugo()
+                })
+            }),
             UIAlertAction(title: "Default", style: .default, handler: { _ in
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
                     self.defaultStyle()
@@ -203,6 +208,44 @@ class ConversationViewController: MessagesViewController {
         
         // Finally set the items
         messageInputBar.setStackViewItems(items, forStack: .bottom, animated: true)
+    }
+    
+    func sanrokugo() {
+        defaultStyle()
+        
+        let items = [
+            makeButton(named: "ic_camera")
+        ]
+        items.forEach { $0.tintColor = .lightGray }
+        
+        messageInputBar.isTranslucent = false
+        messageInputBar.backgroundView.backgroundColor = .white
+        messageInputBar.separatorLine.isHidden = true
+        messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 36, bottom: 8, right: 36)
+        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 36, bottom: 8, right: 36)
+        messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
+//        messageInputBar.inputTextView.layer.borderWidth = 1.0
+//        messageInputBar.inputTextView.layer.cornerRadius = 16.0
+//        messageInputBar.inputTextView.layer.masksToBounds = true
+        messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        messageInputBar.setRightStackViewWidthConstant(to: 36, animated: true)
+        messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: true)
+//        messageInputBar.setStackViewItems([messageInputBar.sendButton], forStack: .right, animated: true)
+        messageInputBar.setStackViewItems(items, forStack: .left, animated: true)
+        
+//        messageInputBar.sendButton.imageView?.backgroundColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
+//        messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+//        messageInputBar.sendButton.setSize(CGSize(width: 36, height: 36), animated: true)
+//        messageInputBar.sendButton.image = #imageLiteral(resourceName: "ic_up")
+//        messageInputBar.sendButton.title = nil
+//        messageInputBar.sendButton.imageView?.layer.cornerRadius = 16
+//        messageInputBar.sendButton.backgroundColor = .clear
+//        messageInputBar.textViewPadding.left = -38
+
+        
+//        messageInputBar.setStackViewItems(items, forStack: .left, animated: true)
     }
     
     func iMessage() {
