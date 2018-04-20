@@ -48,7 +48,6 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     public var sideBottomLabelSize: CGSize = .zero
     public var timeLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var timeLabelSize: CGSize = .zero
-//    public var favoriteButtonAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var favoriteButtonSize: CGSize = .zero
 
     // MARK: - Methods
@@ -71,7 +70,6 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         copy.sideBottomLabelSize = sideBottomLabelSize
         copy.timeLabelAlignment = timeLabelAlignment
         copy.timeLabelSize = timeLabelSize
-//        copy.favoriteButtonAlignment = favoriteButtonAlignment
         copy.favoriteButtonSize = favoriteButtonSize
         return copy
         // swiftlint:enable force_cast
@@ -95,7 +93,6 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
             && attributes.sideBottomLabelSize == sideBottomLabelSize
             && attributes.timeLabelAlignment == timeLabelAlignment
             && attributes.timeLabelSize == timeLabelSize
-//            && attributes.favoriteButtonAlignment == favoriteButtonAlignment
             && attributes.favoriteButtonSize == favoriteButtonSize
         } else {
             return false

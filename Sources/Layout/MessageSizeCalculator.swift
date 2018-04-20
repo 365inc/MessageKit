@@ -47,6 +47,10 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingCellBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
     public var outgoingCellBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
+    public var incomingCellSideLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets())
+    public var outgoingCellSideLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets())
+
+    
     open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
 
@@ -66,9 +70,9 @@ open class MessageSizeCalculator: CellSizeCalculator {
         attributes.bottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
         //osuzuki
         //TODO:
-        attributes.sideBottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: UIEdgeInsets.zero)
+        attributes.sideBottomLabelAlignment = cellSideLabelAlignment(for: message)
         attributes.sideBottomLabelSize = cellSideBottomLabelSize(for: message, at: indexPath)
-        attributes.timeLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: UIEdgeInsets.zero)
+        attributes.timeLabelAlignment = cellSideLabelAlignment(for: message)
         attributes.timeLabelSize = cellTimeLabelSize(for: message, at: indexPath)
         attributes.favoriteButtonSize = cellFavoriteButtonSize(for: message, at: indexPath)
     }
@@ -169,6 +173,12 @@ open class MessageSizeCalculator: CellSizeCalculator {
     //osuzuki
     public func cellSideBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         return CGSize(width: 30, height: 18)
+    }
+    
+    public func cellSideLabelAlignment(for message: MessageType) -> LabelAlignment {
+        let dataSource = messagesLayout.messagesDataSource
+        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingCellSideLabelAlignment : incomingCellSideLabelAlignment
     }
     
     public func cellTimeLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {

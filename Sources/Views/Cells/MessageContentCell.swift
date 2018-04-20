@@ -294,7 +294,6 @@ open class MessageContentCell: MessageCollectionViewCell {
     open func layoutSideBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.sideBottomLabelSize != .zero else { return }
         
-        //TODO: fix sideBottomにする
         cellSideBottomLabel.textAlignment = attributes.sideBottomLabelAlignment.textAlignment
         cellSideBottomLabel.textInsets = attributes.sideBottomLabelAlignment.textInsets
         
@@ -304,11 +303,11 @@ open class MessageContentCell: MessageCollectionViewCell {
         
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
-            //アバターが右側（自分の場合）
-            origin.x = messageContainerView.frame.minX - attributes.sideBottomLabelSize.width - 3
-        case .cellTrailing:
             //アバターが左側（相手の場合）
             origin.x = messageContainerView.frame.maxX + 3
+        case .cellTrailing:
+            //アバターが右側（自分の場合）
+            origin.x = messageContainerView.frame.minX - attributes.sideBottomLabelSize.width - 3
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
@@ -327,11 +326,11 @@ open class MessageContentCell: MessageCollectionViewCell {
         
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
-            //アバターが右側（自分の場合）
-            origin.x = messageContainerView.frame.minX - attributes.sideBottomLabelSize.width - 3
-        case .cellTrailing:
             //アバターが左側（相手の場合）
             origin.x = messageContainerView.frame.maxX + 3
+        case .cellTrailing:
+            //アバターが右側（自分の場合）
+            origin.x = messageContainerView.frame.minX - attributes.sideBottomLabelSize.width - 3
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
@@ -347,11 +346,11 @@ open class MessageContentCell: MessageCollectionViewCell {
         
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
-            //アバターが右側（自分の場合）
-            origin.x = messageContainerView.frame.minX - attributes.favoriteButtonSize.width - 3
-        case .cellTrailing:
             //アバターが左側（相手の場合）
             origin.x = messageContainerView.frame.maxX + 3
+        case .cellTrailing:
+            //アバターが右側（自分の場合）
+            origin.x = messageContainerView.frame.minX - attributes.favoriteButtonSize.width - 3
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
