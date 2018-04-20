@@ -330,7 +330,7 @@ open class MessageContentCell: MessageCollectionViewCell {
             origin.x = messageContainerView.frame.maxX + 3
         case .cellTrailing:
             //アバターが右側（自分の場合）
-            origin.x = messageContainerView.frame.minX - attributes.sideBottomLabelSize.width - 3
+            origin.x = messageContainerView.frame.minX - attributes.timeLabelSize.width - 3
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
@@ -349,8 +349,8 @@ open class MessageContentCell: MessageCollectionViewCell {
             //アバターが左側（相手の場合）
             origin.x = messageContainerView.frame.maxX + 3
         case .cellTrailing:
-            //アバターが右側（自分の場合）
-            origin.x = messageContainerView.frame.minX - attributes.favoriteButtonSize.width - 3
+            //アバターが右側（自分の場合）->表示しない
+            origin.x = 0// messageContainerView.frame.minX - attributes.favoriteButtonSize.width - 3
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
