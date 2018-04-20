@@ -51,6 +51,26 @@ open class MessageContentCell: MessageCollectionViewCell {
         label.numberOfLines = 0
         return label
     }()
+    
+    //osuzuki
+    //既読ラベル
+    open var cellSideBottomLabel: InsetLabel = {
+        let label = InsetLabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    open var cellTimeLabel: InsetLabel = {
+        let label = InsetLabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    open var cellFavoriteButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+
 
     /// The `MessageCellDelegate` for the cell.
     open weak var delegate: MessageCellDelegate?
@@ -70,6 +90,10 @@ open class MessageContentCell: MessageCollectionViewCell {
         contentView.addSubview(avatarView)
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(cellBottomLabel)
+        //osuzuki
+        contentView.addSubview(cellSideBottomLabel)
+        contentView.addSubview(cellTimeLabel)
+        contentView.addSubview(cellFavoriteButton)
     }
 
     open override func prepareForReuse() {
@@ -78,6 +102,13 @@ open class MessageContentCell: MessageCollectionViewCell {
         cellTopLabel.attributedText = nil
         cellBottomLabel.text = nil
         cellBottomLabel.attributedText = nil
+        //osuzuki
+        cellSideBottomLabel.text = nil
+        cellSideBottomLabel.attributedText = nil
+        cellTimeLabel.text = nil
+        cellTimeLabel.attributedText = nil
+        cellFavoriteButton.setImage(UIImage(), for: .normal)
+        cellFavoriteButton.setImage(UIImage(), for: .selected)
     }
 
     // MARK: - Configuration
@@ -90,6 +121,10 @@ open class MessageContentCell: MessageCollectionViewCell {
         layoutAvatarView(with: attributes)
         layoutBottomLabel(with: attributes)
         layoutTopLabel(with: attributes)
+        //osuzuki
+        layoutSideBottomLabel(with: attributes)
+        layoutTimeLabel(with: attributes)
+        layoutFavoriteButton(with: attributes)
     }
 
     /// Used to configure the cell.
@@ -118,9 +153,31 @@ open class MessageContentCell: MessageCollectionViewCell {
 
         let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
-
+        //osuzuki
+        let sideBottomText = dataSource.cellSideBottomLabelAttributedText(for: message, at: indexPath)
+        let timeText = dataSource.cellTimeLabelAttributedText(for: message, at: indexPath)
+        let buttonImages = dataSource.cellFavoriteButtonImages(for: message, at: indexPath)
+        
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
+        cellSideBottomLabel.attributedText = sideBottomText
+        cellTimeLabel.attributedText = timeText
+        if let buttonImages = buttonImages {
+            if buttonImages.count == 2 {
+                cellFavoriteButton.setImage(buttonImages[0], for: .normal)
+                cellFavoriteButton.setImage(buttonImages[1], for: .selected)
+            } else if buttonImages.count > 2 {
+                cellFavoriteButton.setImage(buttonImages[0], for: .normal)
+                cellFavoriteButton.setImage(buttonImages[1], for: .highlighted)
+                cellFavoriteButton.setImage(buttonImages[2], for: .selected)
+            }
+            cellFavoriteButton.addTarget(self, action: #selector(MessageContentCell.didPushFavoriteButton(sender:)), for: .touchUpInside)
+            cellFavoriteButton.isSelected = dataSource.cellIsFavorite(for: message, at: indexPath)
+        }
+    }
+    
+    @objc func didPushFavoriteButton(sender: UIButton) {
+        delegate?.didPushFavoriteButton(in: self, button: sender)
     }
 
     /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....
@@ -230,6 +287,76 @@ open class MessageContentCell: MessageCollectionViewCell {
         let origin = CGPoint(x: 0, y: y)
 
         cellBottomLabel.frame = CGRect(origin: origin, size: attributes.bottomLabelSize)
+    }
+    
+    //osuzuki
+    
+    open func layoutSideBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
+        guard attributes.sideBottomLabelSize != .zero else { return }
+        
+        //TODO: fix sideBottomにする
+        cellSideBottomLabel.textAlignment = attributes.sideBottomLabelAlignment.textAlignment
+        cellSideBottomLabel.textInsets = attributes.sideBottomLabelAlignment.textInsets
+        
+        var origin: CGPoint = .zero
+        origin.y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom
+             - attributes.sideBottomLabelSize.height - attributes.timeLabelSize.height - 2
+        
+        switch attributes.avatarPosition.horizontal {
+        case .cellLeading:
+            //アバターが右側（自分の場合）
+            origin.x = messageContainerView.frame.minX - attributes.sideBottomLabelSize.width - 3
+        case .cellTrailing:
+            //アバターが左側（相手の場合）
+            origin.x = messageContainerView.frame.maxX + 3
+        case .natural:
+            fatalError(MessageKitError.avatarPositionUnresolved)
+        }
+        
+        cellSideBottomLabel.frame = CGRect(origin: origin, size: attributes.sideBottomLabelSize)
+    }
+    
+    open func layoutTimeLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
+        guard attributes.timeLabelSize != .zero else { return }
+        
+        cellTimeLabel.textAlignment = attributes.timeLabelAlignment.textAlignment
+        cellTimeLabel.textInsets = attributes.timeLabelAlignment.textInsets
+        
+        var origin: CGPoint = .zero
+        origin.y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom - attributes.timeLabelSize.height
+        
+        switch attributes.avatarPosition.horizontal {
+        case .cellLeading:
+            //アバターが右側（自分の場合）
+            origin.x = messageContainerView.frame.minX - attributes.sideBottomLabelSize.width - 3
+        case .cellTrailing:
+            //アバターが左側（相手の場合）
+            origin.x = messageContainerView.frame.maxX + 3
+        case .natural:
+            fatalError(MessageKitError.avatarPositionUnresolved)
+        }
+        
+        cellTimeLabel.frame = CGRect(origin: origin, size: attributes.timeLabelSize)
+    }
+    
+    open func layoutFavoriteButton(with attributes: MessagesCollectionViewLayoutAttributes) {
+        guard attributes.favoriteButtonSize != .zero else { return }
+        
+        var origin: CGPoint = .zero
+        origin.y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom - attributes.timeLabelSize.height
+        
+        switch attributes.avatarPosition.horizontal {
+        case .cellLeading:
+            //アバターが右側（自分の場合）
+            origin.x = messageContainerView.frame.minX - attributes.favoriteButtonSize.width - 3
+        case .cellTrailing:
+            //アバターが左側（相手の場合）
+            origin.x = messageContainerView.frame.maxX + 3
+        case .natural:
+            fatalError(MessageKitError.avatarPositionUnresolved)
+        }
+        
+        cellFavoriteButton.frame = CGRect(origin: origin, size: attributes.favoriteButtonSize)
     }
     
 }

@@ -68,6 +68,7 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didTapTopLabel(in cell: MessageCollectionViewCell)
     
+    //osuzuki
     /// Triggered when pushing the favorite button
     ///
     /// - Parameters:

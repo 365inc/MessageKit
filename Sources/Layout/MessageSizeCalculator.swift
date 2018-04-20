@@ -64,6 +64,13 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
         attributes.bottomLabelAlignment = cellBottomLabelAlignment(for: message)
         attributes.bottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
+        //osuzuki
+        //TODO:
+        attributes.sideBottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: UIEdgeInsets.zero)
+        attributes.sideBottomLabelSize = cellSideBottomLabelSize(for: message, at: indexPath)
+        attributes.timeLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: UIEdgeInsets.zero)
+        attributes.timeLabelSize = cellTimeLabelSize(for: message, at: indexPath)
+        attributes.favoriteButtonSize = cellFavoriteButtonSize(for: message, at: indexPath)
     }
 
     open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
@@ -155,6 +162,21 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingCellBottomLabelAlignment : incomingCellBottomLabelAlignment
+    }
+    
+    // MARK: - Side Bottom Label(既読ラベル), Time Label, Favorite Button
+    
+    //osuzuki
+    public func cellSideBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 30, height: 18)
+    }
+    
+    public func cellTimeLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 30, height: 18)
+    }
+    
+    public func cellFavoriteButtonSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 30, height: 30)
     }
 
     // MARK: - MessageContainer
