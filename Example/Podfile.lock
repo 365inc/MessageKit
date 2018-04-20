@@ -1,5 +1,5 @@
 PODS:
-  - MessageKit (0.13.2)
+  - MessageKit (0.13.4)
 
 DEPENDENCIES:
   - MessageKit (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MessageKit: 9eae9ccd23a9bcd7d8aab58ae98acac6f7071e8d
+  MessageKit: f51122543e9ba8b521e5eab58b0385bd7ce47a10
 
 PODFILE CHECKSUM: cecdb7bc8129cf99f66de9f68eea3256fec30c3d
 

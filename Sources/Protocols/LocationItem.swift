@@ -22,22 +22,15 @@
  SOFTWARE.
  */
 
-import Foundation
+import class CoreLocation.CLLocation
 
-extension Bundle {
+/// A protocol used to represent the data for a location message.
+public protocol LocationItem {
 
-    internal static func messageKitAssetBundle() -> Bundle {
-        let podBundle = Bundle(for: MessagesViewController.self)
-        
-        guard let resourceBundleUrl = podBundle.url(forResource: "MessageKitAssets", withExtension: "bundle") else {
-            fatalError(MessageKitError.couldNotCreateAssetsPath)
-        }
-        
-        guard let resourceBundle = Bundle(url: resourceBundleUrl) else {
-            fatalError(MessageKitError.couldNotLoadAssetsBundle)
-        }
-        
-        return resourceBundle
-    }
+    /// The location.
+    var location: CLLocation { get set }
+
+    /// The size of the location item.
+    var size: CGSize { get set }
 
 }

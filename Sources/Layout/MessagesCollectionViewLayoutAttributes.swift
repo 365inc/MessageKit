@@ -25,50 +25,76 @@
 import UIKit
 
 /// The layout attributes used by a `MessageCollectionViewCell` to layout its subviews.
-final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
 
     // MARK: - Properties
 
-    var avatarFrame: CGRect = .zero
+    public var avatarSize: CGSize = .zero
+    public var avatarPosition = AvatarPosition(vertical: .cellBottom)
 
-    var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
-    var messageContainerFrame: CGRect = .zero
-    var messageLabelInsets: UIEdgeInsets = .zero
+    public var messageContainerSize: CGSize = .zero
+    public var messageContainerPadding: UIEdgeInsets = .zero
+    public var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    public var messageLabelInsets: UIEdgeInsets = .zero
 
+//<<<<<<< HEAD
     //osuzuki
-    var topLabelFrame: CGRect = .zero
-    var bottomLabelFrame: CGRect = .zero
-    var sideBottomLabelFrame: CGRect = .zero
-    var timeLabelFrame: CGRect = .zero
-    var favoriteButtonFrame: CGRect = .zero
+//    var topLabelFrame: CGRect = .zero
+//    var bottomLabelFrame: CGRect = .zero
+//    var sideBottomLabelFrame: CGRect = .zero
+//    var timeLabelFrame: CGRect = .zero
+//    var favoriteButtonFrame: CGRect = .zero
     
+//=======
+    public var topLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var topLabelSize: CGSize = .zero
+
+    public var bottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var bottomLabelSize: CGSize = .zero
+
+//>>>>>>> msg/development
     // MARK: - Methods
 
-    override func copy(with zone: NSZone? = nil) -> Any {
+    open override func copy(with zone: NSZone? = nil) -> Any {
         // swiftlint:disable force_cast
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
-        copy.avatarFrame = avatarFrame
-        copy.messageContainerFrame = messageContainerFrame
+        copy.avatarSize = avatarSize
+        copy.avatarPosition = avatarPosition
+        copy.messageContainerSize = messageContainerSize
+        copy.messageContainerPadding = messageContainerPadding
         copy.messageLabelFont = messageLabelFont
         copy.messageLabelInsets = messageLabelInsets
-        copy.topLabelFrame = topLabelFrame
-        copy.bottomLabelFrame = bottomLabelFrame
-        copy.sideBottomLabelFrame = sideBottomLabelFrame//osuzuki
-        copy.timeLabelFrame = timeLabelFrame//osuzuki
-        copy.favoriteButtonFrame = favoriteButtonFrame//osuzuki
+//<<<<<<< HEAD
+//        copy.topLabelFrame = topLabelFrame
+//        copy.bottomLabelFrame = bottomLabelFrame
+//        copy.sideBottomLabelFrame = sideBottomLabelFrame//osuzuki
+//        copy.timeLabelFrame = timeLabelFrame//osuzuki
+//        copy.favoriteButtonFrame = favoriteButtonFrame//osuzuki
+//=======
+        copy.topLabelAlignment = topLabelAlignment
+        copy.topLabelSize = topLabelSize
+        copy.bottomLabelAlignment = bottomLabelAlignment
+        copy.bottomLabelSize = bottomLabelSize
+//>>>>>>> msg/development
         return copy
         // swiftlint:enable force_cast
     }
 
-    override func isEqual(_ object: Any?) -> Bool {
-
+    open override func isEqual(_ object: Any?) -> Bool {
         // MARK: - LEAVE this as is
-        // swiftlint:disable unused_optional_binding
-        if let _ = object as? MessagesCollectionViewLayoutAttributes {
-            return super.isEqual(object)
+        if let attributes = object as? MessagesCollectionViewLayoutAttributes {
+            return super.isEqual(object) && attributes.avatarSize == avatarSize
+            && attributes.avatarPosition == attributes.avatarPosition
+            && attributes.messageContainerSize == messageContainerSize
+            && attributes.messageContainerPadding == messageContainerPadding
+            && attributes.messageLabelFont == messageLabelFont
+            && attributes.messageLabelInsets == messageLabelInsets
+            && attributes.topLabelAlignment == topLabelAlignment
+            && attributes.topLabelSize == topLabelSize
+            && attributes.bottomLabelAlignment == bottomLabelAlignment
+            && attributes.bottomLabelSize == bottomLabelSize
         } else {
             return false
         }
-        // swiftlint:enable unused_optional_binding
     }
 }
