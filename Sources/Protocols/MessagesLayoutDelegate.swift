@@ -31,87 +31,7 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// Specifies the size to use for a header view.
     ///
     /// - Parameters:
-//<<<<<<< HEAD
-//    ///   - message: The `MessageType` that will be displayed by this cell.
-//    ///   - indexPath: The `IndexPath` of the cell.
-//    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-//    ///
-//    /// The default value returned by this method is determined by the messages `Sender`:
-//    ///
-//    /// Current Sender: `UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)`
-//    ///
-//    /// All other Senders: `UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)`
-//    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
-//
-//    /// Specifies the vertical and horizontal alignment for the `AvatarView` in a `MessageCollectionViewCell`.
-//    ///
-//    /// - Parameters:
-//    ///   - message: The `MessageType` that will be displayed by this cell.
-//    ///   - indexPath: The `IndexPath` of the cell.
-//    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-//    ///
-//    /// The default value returned by this method is an `AvatarPosition` with
-//    /// `Horizontal.natural` and `Vertical.messageBottom`.
-//    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
-//
-//    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s top label.
-//    ///
-//    /// - Parameters:
-//    ///   - message: The `MessageType` that will be displayed by this cell.
-//    ///   - indexPath: The `IndexPath` of the cell.
-//    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-//    ///
-//    /// The default value returned by this method is determined by the messages `Sender`:
-//    ///
-//    /// Current Sender: .messageTrailing(.zero)
-//    ///
-//    /// All other senders: .messageLeading(.zero)
-//    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
-//
-//    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s bottom label.
-//    ///
-//    /// - Parameters:
-//    ///   - message: The `MessageType` that will be displayed by this cell.
-//    ///   - indexPath: The `IndexPath` of the cell.
-//    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-//    ///
-//    /// The default value returned by this method is determined by the messages `Sender`:
-//    ///
-//    /// Current Sender: .messageLeading(.zero)
-//    ///
-//    /// All other senders: .messageTrailing(.zero)
-//    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
-//
-//    //osuzuki
-//    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s side bottom label.
-//    func cellSideBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
-//
-//    //osuzuki
-//    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s time label.
-//    func cellTimeLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
-//
-//    //osuzuki
-//    /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s favorite Button
-//    func cellFavoriteButtonAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
-//
-//    /// Specifies the size of the `AvatarView` in a `MessageCollectionViewCell`.
-//    ///
-//    /// - Parameters:
-//    ///   - message: The `MessageType` that will be displayed by this cell.
-//    ///   - indexPath: The `IndexPath` of the cell.
-//    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-//    ///
-//    /// The default value returned by this method is a size of `30 x 30`.
-//    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
-//
-//    /// Specifies the size to use for a `MessageHeaderView`.
-//    ///
-//    /// - Parameters:
-//    ///   - message: The `MessageType` that will be displayed for this header.
-//    ///   - indexPath: The `IndexPath` of the header.
-//=======
     ///   - section: The section number of the header.
-//>>>>>>> msg/development
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
     ///
     /// - Note:
@@ -154,70 +74,7 @@ public protocol MessagesLayoutDelegate: AnyObject {
 
 public extension MessagesLayoutDelegate {
 
-//<<<<<<< HEAD
-//    // MARK: - All Messages Defaults
-//
-//    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
-//        guard let dataSource = messagesCollectionView.messagesDataSource else {
-//            fatalError(MessageKitError.nilMessagesDataSource)
-//        }
-//        if dataSource.isFromCurrentSender(message: message) {
-//            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
-//        } else {
-//            return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
-//        }
-//    }
-//
-//    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-//        guard let dataSource = messagesCollectionView.messagesDataSource else {
-//            fatalError(MessageKitError.nilMessagesDataSource)
-//        }
-//        return dataSource.isFromCurrentSender(message: message) ? .messageTrailing(.zero) : .messageLeading(.zero)
-//    }
-//
-//    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-//        guard let dataSource = messagesCollectionView.messagesDataSource else {
-//            fatalError(MessageKitError.nilMessagesDataSource)
-//        }
-//        return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
-//    }
-//
-//    //osuzuki
-//    func cellSideBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-//        guard let dataSource = messagesCollectionView.messagesDataSource else {
-//            fatalError(MessageKitError.nilMessagesDataSource)
-//        }
-//        return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
-//    }
-//
-//    //osuzuki
-//    func cellTimeLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-//        guard let dataSource = messagesCollectionView.messagesDataSource else {
-//            fatalError(MessageKitError.nilMessagesDataSource)
-//        }
-//        return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
-//    }
-//
-//    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-//        return CGSize(width: 30, height: 30)
-//    }
-//
-//    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
-//        return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
-//    }
-//
-//    func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-//        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-//            fatalError(MessageKitError.nilMessagesDisplayDelegate)
-//        }
-//        let shouldDisplay = displayDelegate.shouldDisplayHeader(for: message, at: indexPath, in: messagesCollectionView)
-//        return shouldDisplay ? CGSize(width: messagesCollectionView.bounds.width, height: 12) : .zero
-//    }
-//
-//    func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-//=======
     func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-//>>>>>>> msg/development
         return .zero
     }
 

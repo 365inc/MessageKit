@@ -37,22 +37,20 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     public var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
     public var messageLabelInsets: UIEdgeInsets = .zero
 
-//<<<<<<< HEAD
-    //osuzuki
-//    var topLabelFrame: CGRect = .zero
-//    var bottomLabelFrame: CGRect = .zero
-//    var sideBottomLabelFrame: CGRect = .zero
-//    var timeLabelFrame: CGRect = .zero
-//    var favoriteButtonFrame: CGRect = .zero
-    
-//=======
     public var topLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var topLabelSize: CGSize = .zero
 
     public var bottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var bottomLabelSize: CGSize = .zero
+    
+    //osuzuki
+    public var sideBottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var sideBottomLabelSize: CGSize = .zero
+    public var timeLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var timeLabelSize: CGSize = .zero
+    public var favoriteButtonAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var favoriteButtonSize: CGSize = .zero
 
-//>>>>>>> msg/development
     // MARK: - Methods
 
     open override func copy(with zone: NSZone? = nil) -> Any {
@@ -64,18 +62,17 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         copy.messageContainerPadding = messageContainerPadding
         copy.messageLabelFont = messageLabelFont
         copy.messageLabelInsets = messageLabelInsets
-//<<<<<<< HEAD
-//        copy.topLabelFrame = topLabelFrame
-//        copy.bottomLabelFrame = bottomLabelFrame
-//        copy.sideBottomLabelFrame = sideBottomLabelFrame//osuzuki
-//        copy.timeLabelFrame = timeLabelFrame//osuzuki
-//        copy.favoriteButtonFrame = favoriteButtonFrame//osuzuki
-//=======
         copy.topLabelAlignment = topLabelAlignment
         copy.topLabelSize = topLabelSize
         copy.bottomLabelAlignment = bottomLabelAlignment
         copy.bottomLabelSize = bottomLabelSize
-//>>>>>>> msg/development
+        //osuzuki
+        copy.sideBottomLabelAlignment = sideBottomLabelAlignment
+        copy.sideBottomLabelSize = sideBottomLabelSize
+        copy.timeLabelAlignment = timeLabelAlignment
+        copy.timeLabelSize = timeLabelSize
+        copy.favoriteButtonAlignment = favoriteButtonAlignment
+        copy.favoriteButtonSize = favoriteButtonSize
         return copy
         // swiftlint:enable force_cast
     }
@@ -93,6 +90,13 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
             && attributes.topLabelSize == topLabelSize
             && attributes.bottomLabelAlignment == bottomLabelAlignment
             && attributes.bottomLabelSize == bottomLabelSize
+            //osuzuki
+            && attributes.sideBottomLabelAlignment == sideBottomLabelAlignment
+            && attributes.sideBottomLabelSize == sideBottomLabelSize
+            && attributes.timeLabelAlignment == timeLabelAlignment
+            && attributes.timeLabelSize == timeLabelSize
+            && attributes.favoriteButtonAlignment == favoriteButtonAlignment
+            && attributes.favoriteButtonSize == favoriteButtonSize
         } else {
             return false
         }
