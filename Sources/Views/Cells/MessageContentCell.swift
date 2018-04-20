@@ -342,7 +342,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         guard attributes.favoriteButtonSize != .zero else { return }
         
         var origin: CGPoint = .zero
-        origin.y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom - attributes.timeLabelSize.height
+        origin.y = messageContainerView.frame.maxY - attributes.favoriteButtonSize.height - attributes.timeLabelSize.height - 2
         
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
