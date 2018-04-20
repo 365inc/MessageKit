@@ -172,7 +172,11 @@ open class MessageSizeCalculator: CellSizeCalculator {
     
     //osuzuki
     public func cellSideBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 30, height: 18)
+        let dataSource = messagesLayout.messagesDataSource
+        guard let text = dataSource.cellSideBottomLabelAttributedText(for: message, at: indexPath) else {
+            return .zero
+        }
+        return labelSize(for: text, considering: 44)
     }
     
     public func cellSideLabelAlignment(for message: MessageType) -> LabelAlignment {
@@ -182,11 +186,15 @@ open class MessageSizeCalculator: CellSizeCalculator {
     }
     
     public func cellTimeLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 30, height: 18)
+        let dataSource = messagesLayout.messagesDataSource
+        guard let text = dataSource.cellTimeLabelAttributedText(for: message, at: indexPath) else {
+            return .zero
+        }
+        return labelSize(for: text, considering: 44)
     }
     
     public func cellFavoriteButtonSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 30, height: 30)
+        return CGSize(width: 24, height: 24)
     }
 
     // MARK: - MessageContainer
