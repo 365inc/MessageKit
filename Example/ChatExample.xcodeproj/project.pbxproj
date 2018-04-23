@@ -22,6 +22,7 @@
 		C71E7FE0208BEB0600ADFA11 /* CustomMessageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E7FDF208BEB0600ADFA11 /* CustomMessageCollectionView.swift */; };
 		C71E7FE2208BEB7600ADFA11 /* CustomMessagesCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E7FE1208BEB7600ADFA11 /* CustomMessagesCollectionViewFlowLayout.swift */; };
 		C71E7FE4208D3EE400ADFA11 /* FileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E7FE3208D3EE400ADFA11 /* FileMessageCell.swift */; };
+		C71E7FE6208D5B5E00ADFA11 /* FileMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E7FE5208D5B5E00ADFA11 /* FileMediaItem.swift */; };
 		C7CA53A1B85256A5097E7DC7 /* Pods_ChatExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B316705C4717C3B4C916D62 /* Pods_ChatExample.framework */; };
 		CAB36EA12007A573009995ED /* TableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB36EA02007A573009995ED /* TableViewCells.swift */; };
 		CAB36EA32007B1B7009995ED /* Settings+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB36EA22007B1B7009995ED /* Settings+UserDefaults.swift */; };
@@ -86,6 +87,7 @@
 		C71E7FDF208BEB0600ADFA11 /* CustomMessageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessageCollectionView.swift; sourceTree = "<group>"; };
 		C71E7FE1208BEB7600ADFA11 /* CustomMessagesCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessagesCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		C71E7FE3208D3EE400ADFA11 /* FileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMessageCell.swift; sourceTree = "<group>"; };
+		C71E7FE5208D5B5E00ADFA11 /* FileMediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMediaItem.swift; sourceTree = "<group>"; };
 		CAB36EA02007A573009995ED /* TableViewCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCells.swift; sourceTree = "<group>"; };
 		CAB36EA22007B1B7009995ED /* Settings+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+UserDefaults.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -161,6 +163,7 @@
 				37D3EAC31F390E5F00DD6A55 /* SampleData.swift */,
 				882B5E7E1CF7D53600B6E160 /* InboxViewController.swift */,
 				B096438A1F288D47004D0129 /* MockMessage.swift */,
+				C71E7FE5208D5B5E00ADFA11 /* FileMediaItem.swift */,
 				C71E7FDF208BEB0600ADFA11 /* CustomMessageCollectionView.swift */,
 				C71E7FE1208BEB7600ADFA11 /* CustomMessagesCollectionViewFlowLayout.swift */,
 				C71E7FE3208D3EE400ADFA11 /* FileMessageCell.swift */,
@@ -524,6 +527,7 @@
 				882B5E851CF7D53600B6E160 /* InboxViewController.swift in Sources */,
 				C71E7FE0208BEB0600ADFA11 /* CustomMessageCollectionView.swift in Sources */,
 				C71E7FE4208D3EE400ADFA11 /* FileMessageCell.swift in Sources */,
+				C71E7FE6208D5B5E00ADFA11 /* FileMediaItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -53,21 +53,6 @@ private struct MockMediaItem: MediaItem {
 
 }
 
-struct MockFileMediaItem: MediaItem {
-    
-    var url: URL?
-    var image: UIImage?
-    var placeholderImage: UIImage
-    var size: CGSize
-    let hogehoge = "hogehoge"
-    
-    init() {
-        self.size = CGSize(width: 240, height: 240)
-        self.placeholderImage = UIImage()
-    }
-    
-}
-
 internal struct MockMessage: MessageType {
 
     var messageId: String
@@ -101,7 +86,7 @@ internal struct MockMessage: MessageType {
     }
     
     init(data: Data, sender: Sender, messageId: String, date: Date) {
-        let mediaItem = MockFileMediaItem()
+        let mediaItem = FileMediaItem()
         self.init(kind: .custom(mediaItem), sender: sender, messageId: messageId, date: date)
     }
 
