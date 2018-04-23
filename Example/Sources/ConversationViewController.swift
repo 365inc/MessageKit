@@ -33,8 +33,10 @@ internal class ConversationViewController: MessagesViewController {
     var messageList: [MockMessage] = []
     
     var isTyping = false
-
+    
     override func viewDidLoad() {
+        messagesCollectionView = CustomMessagesCollectionView()
+        messagesCollectionView.register(FileMessageCell.self)
         super.viewDidLoad()
     
         let messagesToFetch = UserDefaults.standard.mockMessagesCount()
@@ -286,6 +288,31 @@ internal class ConversationViewController: MessagesViewController {
                 print("Item Tapped")
         }
     }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError("MessagesCollectionView not found")
+        }
+        
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("messagesDataSource not found")
+        }
+        
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        switch message.kind {
+        case .custom:
+            //TODO: add custom
+            let cell = messagesCollectionView.dequeueReusableCell(FileMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        default:
+            return super.collectionView(collectionView, cellForItemAt: indexPath)
+        }
+       
+    }
+    
 }
 
 // MARK: - MessagesDataSource
@@ -578,7 +605,6 @@ extension ConversationViewController: MessageInputBarDelegate {
     }
 
 }
-
 
 extension NSMutableAttributedString {
     func addCustomFontColorAttribute() -> NSMutableAttributedString {
