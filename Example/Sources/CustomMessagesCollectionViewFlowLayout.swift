@@ -17,8 +17,6 @@ class CustomMessagesCollectionViewFlowLayout: MessagesCollectionViewFlowLayout {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         switch message.kind {
         case .custom:
-            //TODO: Add Custom
-            print("custom")
             return customMessageSizeCalculator
         default:
             return super.cellSizeCalculatorForItem(at: indexPath)
@@ -28,24 +26,57 @@ class CustomMessagesCollectionViewFlowLayout: MessagesCollectionViewFlowLayout {
 
 open class CustomMessageSizeCalculator: MessageSizeCalculator {
     
+    //TODO:あとで共通化
+    private let kOffsetX: CGFloat = 4
+    private let kIcX: CGFloat = 16
+    private let kIcW: CGFloat = 26
+    private let icY: CGFloat = 10
+    private let icH: CGFloat = 26
+    private let kNameBaseH: CGFloat = 18
+    
     open override func messageContainerSize(for message: MessageType) -> CGSize {
-        let maxWidth = messageContainerMaxWidth(for: message)
-        let sizeForMediaItem = { (maxWidth: CGFloat, item: MediaItem?) -> CGSize in
-//            guard let item = item else {
-//                return CGSize.zero
-//            }
-//            if maxWidth < item.size.width {
-//                // Maintain the ratio if width is too great
-//                let height = maxWidth * item.size.height / item.size.width
-//                return CGSize(width: maxWidth, height: height)
-//            }
-            return CGSize(width: 240, height: 80)
-        }
+
         switch message.kind {
         case .custom(let item):
-            return sizeForMediaItem(maxWidth, item as? MediaItem)
+            //TODO: セルのサイズ Add Custom
+            print("custom")
+            guard let item = item as? FileMediaItem else {
+                return FileMessageCell.size
+            }
+            return mediaViewDisplaySize(item: item)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
+    }
+    
+    func mediaViewDisplaySize(item: FileMediaItem) -> CGSize {
+        let baseH: CGFloat = isBreakLine(item: item) ? FileMessageCell.size.height + kNameBaseH : FileMessageCell.size.height
+        
+        return CGSize(width: FileMessageCell.size.width, height: baseH)
+    }
+    
+    
+    private func nameBaseLabelHeightToEstimate(item: FileMediaItem) -> CGFloat {
+        let nameHeight = heightForView(text: item.fileName ?? "", font:FileMessageCell.nameFont ,width: nameLabelWidth())
+        return nameHeight
+    }
+    
+    private func isBreakLine(item: FileMediaItem) -> Bool {
+        return nameBaseLabelHeightToEstimate(item: item) > kNameBaseH
+    }
+    
+    private func nameLabelWidth() -> CGFloat {
+        return FileMessageCell.size.width - kIcW - kIcX - kOffsetX - 18
+    }
+    
+    func heightForView(text: String, font: UIFont  ,width: CGFloat) -> CGFloat{
+        let label = UILabel(frame: CGRect(x:0, y:0, width:width, height:CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = font
+        label.text = text
+        
+        label.sizeToFit()
+        return label.frame.height
     }
 }

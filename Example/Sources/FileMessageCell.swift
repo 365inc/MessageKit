@@ -11,9 +11,9 @@ import MessageKit
 
 class FileMessageCell: MessageContentCell {
     
-    private let kBaseMediaViewDisplaySize = CGSize(width: 240, height: 80)
+    static let size = CGSize(width: 240, height: 80)
     
-    private let kNameFont = UIFont.boldSystemFont(ofSize: 13)
+    static let nameFont = UIFont.boldSystemFont(ofSize: 13)
     private let kOffsetX: CGFloat = 4
     private let kIcX: CGFloat = 16
     private let kIcW: CGFloat = 26
@@ -23,7 +23,6 @@ class FileMessageCell: MessageContentCell {
     
     open lazy var iconImageView: UIImageView = {
         let iconImageView = UIImageView()
-        iconImageView.image = iconImage()
         iconImageView.frame = CGRect(x: kIcX, y: icY, width: kIcW, height: icH)
         return iconImageView
     }()
@@ -31,12 +30,14 @@ class FileMessageCell: MessageContentCell {
     open lazy var fileNameLabel: UILabel = {
         let nameX: CGFloat = kIcX + kIcW + kOffsetX
         let nameY: CGFloat = 14
-        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
+        //TODO:fix dynamic height
+//        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
+        let nameH: CGFloat = kNameBaseH
         let fileNameLabel = UILabel(frame: CGRect(x: nameX, y: nameY, width: nameLabelWidth(), height: nameH))
-        fileNameLabel.text = "ファイル名"//self.fileName ?? ""
+//        fileNameLabel.text = "ファイル名"//self.fileName ?? ""
         fileNameLabel.textColor = UIColor.black
         fileNameLabel.textAlignment = .left
-        fileNameLabel.font = kNameFont
+        fileNameLabel.font = FileMessageCell.nameFont
         fileNameLabel.numberOfLines = 2
         return fileNameLabel
     }()
@@ -44,13 +45,15 @@ class FileMessageCell: MessageContentCell {
     open lazy var expireLabel: UILabel = {
         let nameX: CGFloat = kIcX + kIcW + kOffsetX
         let nameY: CGFloat = 14
-        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
+        //TODO:fix dynamic height
+//        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
+        let nameH: CGFloat = kNameBaseH
         let offsetLabelY: CGFloat = 4
         let expireH: CGFloat = 14
         let expireFont: UIFont = UIFont.boldSystemFont(ofSize: 11)
         let expireY: CGFloat = nameY + nameH + offsetLabelY
         let expireLabel = UILabel(frame: CGRect(x: nameX, y: expireY, width: nameLabelWidth(), height: expireH))
-        expireLabel.text = "有効期限 : 2018/3/4"
+//        expireLabel.text = "有効期限 : 2018/3/4"
         expireLabel.textColor = UIColor.darkGray
         expireLabel.textAlignment = .left
         expireLabel.font = UIFont.boldSystemFont(ofSize: 11)
@@ -60,14 +63,16 @@ class FileMessageCell: MessageContentCell {
     open lazy var sizeLabel: UILabel = {
         let nameX: CGFloat = kIcX + kIcW + kOffsetX
         let nameY: CGFloat = 14
-        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
+        //TODO:fix dynamic height
+//        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
+        let nameH: CGFloat = kNameBaseH
         let offsetLabelY: CGFloat = 4
         let expireH: CGFloat = 14
         let expireFont: UIFont = UIFont.boldSystemFont(ofSize: 11)
         let expireY: CGFloat = nameY + nameH + offsetLabelY
         let sizeY: CGFloat = expireY + expireH + offsetLabelY
         let sizeLabel = UILabel(frame: CGRect(x: nameX, y: sizeY, width: nameLabelWidth(), height: expireH))
-        sizeLabel.text = "サイズ : 100.86kB"
+//        sizeLabel.text = "サイズ : 100.86kB"
         sizeLabel.textColor = UIColor.darkGray
         sizeLabel.textAlignment = .left
         sizeLabel.font = expireFont
@@ -79,8 +84,8 @@ class FileMessageCell: MessageContentCell {
         let arrowImageView = UIImageView(image: arrowImage)
         let arrowW = arrowImage.size.width
         let arrowH = arrowImage.size.height
-        arrowImageView.frame = CGRect(x: self.mediaViewDisplaySize().width - arrowW - 10,
-                                      y: self.mediaViewDisplaySize().height/2 - arrowH/2,
+        arrowImageView.frame = CGRect(x: FileMessageCell.size.width - arrowW - 10,
+                                      y: FileMessageCell.size.height/2 - arrowH/2, //TODO:fix make dynamic height
                                       width: arrowW, height: arrowH)
         return arrowImageView
     }()
@@ -101,11 +106,15 @@ class FileMessageCell: MessageContentCell {
         messageContainerView.addSubview(expireLabel)
         messageContainerView.addSubview(sizeLabel)
         messageContainerView.addSubview(arrowImageView)
-        
-//        messageContainerView.addSubview(imageView)
-//        messageContainerView.addSubview(playButtonView)
         setupConstraints()
     }
+    
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "MM/dd HH:mm"
+        return dateFormatter
+    }()
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
@@ -117,120 +126,73 @@ class FileMessageCell: MessageContentCell {
         switch message.kind {
         case .custom(let item):
             if let item = item as? FileMediaItem {
-                print(item.fileData ?? "fileData is nil")
+                
+                iconImageView.image = iconImage(contenTypeRawValue: item.contentType)
+                fileNameLabel.text = item.fileName ?? ""
+                
+                if let expireDate = item.expireDate {
+                    expireLabel.text = "有効期限 : 〜" + dateFormatter.string(from: expireDate)
+                } else {
+                    expireLabel.text = "有効期限 : "
+                }
+                sizeLabel.text = "サイズ : " + fileSizeString(fileSize: item.fileSize)
             }
-        
-            //TODO: Add custom imageview
-//            imageView.image = mediaItem.image ?? mediaItem.placeholderImage
-//            playButtonView.isHidden = true
         default:
             break
         }
         
     }
     
-    func mediaViewDisplaySize() -> CGSize {
-        //        Log.d("HEIGHT_MEDIA:(\(self.fileName ?? "")):\(nameBaseLabelHeightToEstimate())")
-        let baseH: CGFloat = isBreakLine() ? kBaseMediaViewDisplaySize.height + kNameBaseH : kBaseMediaViewDisplaySize.height
-        
-        return CGSize(width: kBaseMediaViewDisplaySize.width, height: baseH)
+    private func fileSizeString(fileSize: UInt?) -> String {
+        if let fileSize = fileSize {
+            if fileSize < 1000 {
+                return "\(fileSize) Byte"
+            } else if fileSize < 1_000_000 {
+                return NSString(format:"%.2f kB",CGFloat(fileSize)/1_000) as String
+            } else if fileSize < 1_000_000_000 {
+                return NSString(format:"%.2f MB",CGFloat(fileSize)/1_000_000) as String
+            } else {
+                return "Too Large"
+            }
+        } else {
+            return ""
+        }
     }
     
-//    private func createMediaView() {
-//        let icY: CGFloat = 10
-//        let icH: CGFloat = 26
-//
-//        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
-//
-//        let baseView = UIView(frame: CGRect(x: 0, y: 0, width: kBaseMediaViewDisplaySize.width, height: mediaViewDisplaySize().height))
-//        baseView.backgroundColor = isOutgoing ? UIColor.srg_chatBubbleOutgoingColor() : UIColor.srg_chatBubbleIncommingColor()
-//        baseView.clipsToBounds = true
-//
-//        let iconImageView = UIImageView(image: self.iconImage())
-//        iconImageView.frame = CGRect(x: kIcX, y: icY, width: kIcW, height: icH)
-//        baseView.addSubview(iconImageView)
-//
-//        let nameX: CGFloat = kIcX + kIcW + kOffsetX
-//        let nameY: CGFloat = 14
-//
-//        let fileNameLabel = UILabel(frame: CGRect(x: nameX, y: nameY, width: nameLabelWidth(), height: nameH))
-//        fileNameLabel.text = self.fileName ?? ""
-//        fileNameLabel.textColor = UIColor.black
-//        fileNameLabel.textAlignment = .left
-//        fileNameLabel.font = kNameFont
-//        fileNameLabel.numberOfLines = 2
-//        //        fileNameLabel.sizeToFit()
-//        baseView.addSubview(fileNameLabel)
-//
-//        //有効期間
-//        let offsetLabelY: CGFloat = 4
-//        let expireH: CGFloat = 14
-//        let expireFont: UIFont = UIFont.boldSystemFont(ofSize: 11)
-//        let expireY: CGFloat = nameY + nameH + offsetLabelY
-//        let expireLabel = UILabel(frame: CGRect(x: nameX, y: expireY, width: nameLabelWidth(), height: expireH))
-//        if let expireDate = self.expireDate {
-//            expireLabel.text = "有効期限 : 〜" + Date.dateTimeFromDate(expireDate)
-//        } else {
-//            expireLabel.text = "有効期限 : "
-//        }
-//        expireLabel.textColor = UIColor.darkGray
-//        expireLabel.textAlignment = .left
-//        expireLabel.font = expireFont
-//        //        expireLabel.sizeToFit()
-//        baseView.addSubview(expireLabel)
-//
-//        //サイズ
-//        let sizeY: CGFloat = expireY + expireH + offsetLabelY
-//        let sizeLabel = UILabel(frame: CGRect(x: nameX, y: sizeY, width: nameLabelWidth(), height: expireH))
-//        sizeLabel.text = "サイズ : " + fileSizeString()
-//        sizeLabel.textColor = UIColor.darkGray
-//        sizeLabel.textAlignment = .left
-//        sizeLabel.font = expireFont
-//        //        sizeLabel.sizeToFit()
-//        baseView.addSubview(sizeLabel)
-//
-//        //矢印(>)
-//        let arrowImage = #imageLiteral(resourceName: "ic_arrow")
-//        let arrowImageView = UIImageView(image: arrowImage)
-//        let arrowW = arrowImage.size.width
-//        let arrowH = arrowImage.size.height
-//        arrowImageView.frame = CGRect(x: self.mediaViewDisplaySize().width - arrowW - 10,
-//                                      y: self.mediaViewDisplaySize().height/2 - arrowH/2,
-//                                      width: arrowW, height: arrowH)
-//        baseView.addSubview(arrowImageView)
-//
-//        JSQMessagesMediaViewBubbleImageMasker.applyBubbleImageMask(toMediaView: baseView, isOutgoing: self.appliesMediaViewMaskAsOutgoing)
+    func mediaViewDisplaySize(item: FileMediaItem) -> CGSize {
+        //        Log.d("HEIGHT_MEDIA:(\(self.fileName ?? "")):\(nameBaseLabelHeightToEstimate())")
+        let baseH: CGFloat = isBreakLine(item: item) ? FileMessageCell.size.height + kNameBaseH : FileMessageCell.size.height
         
-//        self.cachedMediaView = baseView
-//    }
+        return CGSize(width: FileMessageCell.size.width, height: baseH)
+    }
+
     
-    private func nameBaseLabelHeightToEstimate() -> CGFloat {
-        let nameHeight = heightForView(text: /*self.fileName ?? ""*/ "ファイル名!", font:kNameFont ,width: nameLabelWidth())
+    private func nameBaseLabelHeightToEstimate(item: FileMediaItem) -> CGFloat {
+        let nameHeight = heightForView(text: item.fileName ?? "", font:FileMessageCell.nameFont ,width: nameLabelWidth())
         return nameHeight
     }
     
-    private func isBreakLine() -> Bool {
-        return nameBaseLabelHeightToEstimate() > kNameBaseH
+    private func isBreakLine(item: FileMediaItem) -> Bool {
+        return nameBaseLabelHeightToEstimate(item: item) > kNameBaseH
     }
     
     private func nameLabelWidth() -> CGFloat {
-        return kBaseMediaViewDisplaySize.width - kIcW - kIcX - kOffsetX - 18
+        return FileMessageCell.size.width - kIcW - kIcX - kOffsetX - 18
     }
     
-    private func iconImage() -> UIImage {
-        return #imageLiteral(resourceName: "ic_pdf")
-//        if contentType == ContentType.excel.rawValue {
-//            icon = #imageLiteral(resourceName: "ic_xls")
-//        } else if contentType == ContentType.word.rawValue {
-//            icon = #imageLiteral(resourceName: "ic_doc")
-//        } else if contentType == ContentType.powerpoint.rawValue {
-//            icon = #imageLiteral(resourceName: "ic_ppt")
-//        } else if contentType == ContentType.pdf.rawValue {
-//            icon = #imageLiteral(resourceName: "ic_pdf")
-//        } else {
-//            icon = #imageLiteral(resourceName: "ic_file")
-//        }
-//        return icon
+    private func iconImage(contenTypeRawValue: Int) -> UIImage {
+    
+        if contenTypeRawValue == ContentType.excel.rawValue {
+            return #imageLiteral(resourceName: "ic_xls")
+        } else if contenTypeRawValue == ContentType.word.rawValue {
+            return #imageLiteral(resourceName: "ic_doc")
+        } else if contenTypeRawValue == ContentType.powerpoint.rawValue {
+            return #imageLiteral(resourceName: "ic_ppt")
+        } else if contenTypeRawValue == ContentType.pdf.rawValue {
+            return #imageLiteral(resourceName: "ic_pdf")
+        } else {
+            return #imageLiteral(resourceName: "ic_file")
+        }
     }
     
     func heightForView(text: String, font: UIFont  ,width: CGFloat) -> CGFloat{

@@ -11,11 +11,9 @@ import MessageKit
 
 class CustomMessagesCollectionView: MessagesCollectionView {
 
-    //TODO: CustomMessagesCollectionViewFlowLayoutをどこでつかうか？どこでオーバーライドするか？
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: CustomMessagesCollectionViewFlowLayout())
-    }
-    
+    }    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
