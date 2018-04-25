@@ -27,7 +27,7 @@ struct FileMediaItem: MediaItem {
         self.size = CGSize(width: 240, height: 100)
         self.placeholderImage = UIImage()
         
-        self.fileName = "てすとてすと.doc"
+        self.fileName = "プレジニア求人票_我妻良樹様2_180426.docx"//"プレジニア求人票_我妻良樹様2_180426.docx"
         self.expireDate = Date().addingTimeInterval(30000)
         self.fileSize = 123456
         self.contentType = ContentType.word.rawValue

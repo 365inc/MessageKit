@@ -11,7 +11,7 @@ import MessageKit
 
 class FileMessageCell: MessageContentCell {
     
-    static let size = CGSize(width: 240, height: 80)
+    static let size = CGSize(width: 260, height: 80)
     
     static let nameFont = UIFont.boldSystemFont(ofSize: 13)
     private let kOffsetX: CGFloat = 4
@@ -30,30 +30,26 @@ class FileMessageCell: MessageContentCell {
     open lazy var fileNameLabel: UILabel = {
         let nameX: CGFloat = kIcX + kIcW + kOffsetX
         let nameY: CGFloat = 14
-        //TODO:fix dynamic height
-//        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
         let nameH: CGFloat = kNameBaseH
         let fileNameLabel = UILabel(frame: CGRect(x: nameX, y: nameY, width: nameLabelWidth(), height: nameH))
-//        fileNameLabel.text = "ファイル名"//self.fileName ?? ""
         fileNameLabel.textColor = UIColor.black
         fileNameLabel.textAlignment = .left
         fileNameLabel.font = FileMessageCell.nameFont
         fileNameLabel.numberOfLines = 2
+        fileNameLabel.adjustsFontSizeToFitWidth = true
+        fileNameLabel.minimumScaleFactor = 0.4
         return fileNameLabel
     }()
     
     open lazy var expireLabel: UILabel = {
         let nameX: CGFloat = kIcX + kIcW + kOffsetX
         let nameY: CGFloat = 14
-        //TODO:fix dynamic height
-//        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
         let nameH: CGFloat = kNameBaseH
         let offsetLabelY: CGFloat = 4
         let expireH: CGFloat = 14
         let expireFont: UIFont = UIFont.boldSystemFont(ofSize: 11)
         let expireY: CGFloat = nameY + nameH + offsetLabelY
         let expireLabel = UILabel(frame: CGRect(x: nameX, y: expireY, width: nameLabelWidth(), height: expireH))
-//        expireLabel.text = "有効期限 : 2018/3/4"
         expireLabel.textColor = UIColor.darkGray
         expireLabel.textAlignment = .left
         expireLabel.font = UIFont.boldSystemFont(ofSize: 11)
@@ -63,8 +59,6 @@ class FileMessageCell: MessageContentCell {
     open lazy var sizeLabel: UILabel = {
         let nameX: CGFloat = kIcX + kIcW + kOffsetX
         let nameY: CGFloat = 14
-        //TODO:fix dynamic height
-//        let nameH: CGFloat = isBreakLine() ? kNameBaseH * 2 : kNameBaseH
         let nameH: CGFloat = kNameBaseH
         let offsetLabelY: CGFloat = 4
         let expireH: CGFloat = 14
@@ -72,7 +66,6 @@ class FileMessageCell: MessageContentCell {
         let expireY: CGFloat = nameY + nameH + offsetLabelY
         let sizeY: CGFloat = expireY + expireH + offsetLabelY
         let sizeLabel = UILabel(frame: CGRect(x: nameX, y: sizeY, width: nameLabelWidth(), height: expireH))
-//        sizeLabel.text = "サイズ : 100.86kB"
         sizeLabel.textColor = UIColor.darkGray
         sizeLabel.textAlignment = .left
         sizeLabel.font = expireFont
