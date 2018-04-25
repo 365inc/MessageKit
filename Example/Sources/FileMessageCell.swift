@@ -87,9 +87,29 @@ class FileMessageCell: MessageContentCell {
     
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
-//        imageView.fillSuperview()
-//        playButtonView.centerInSuperview()
-//        playButtonView.constraint(equalTo: CGSize(width: 35, height: 35))
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        fileNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        expireLabel.translatesAutoresizingMaskIntoConstraints = false
+        sizeLabel.translatesAutoresizingMaskIntoConstraints = false
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+        let views = ["view": messageContainerView, "iconImageView": iconImageView, "fileNameLabel": fileNameLabel,
+                     "expireLabel" : expireLabel, "sizeLabel": sizeLabel, "arrowImageView": arrowImageView]
+        let horizontal1 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[iconImageView(26)]", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let vertical1 = NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[iconImageView(26)]", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
+        let horizontal2 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-46-[fileNameLabel]-18-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let vertical2 = NSLayoutConstraint.constraints(withVisualFormat: "V:|-14-[fileNameLabel(18)]-4-[expireLabel(14)]-4-[sizeLabel(14)]", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
+        let horizontal3 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-46-[expireLabel]-18-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let horizontal4 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-46-[sizeLabel]-18-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let horizontalArrow = NSLayoutConstraint.constraints(withVisualFormat: "H:[arrowImageView(7)]-10-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let verticalArrow = NSLayoutConstraint.constraints(withVisualFormat: "V:|-35.5-[arrowImageView(9)]", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
+        messageContainerView.addConstraints(horizontal1)
+        messageContainerView.addConstraints(horizontal2)
+        messageContainerView.addConstraints(horizontal3)
+        messageContainerView.addConstraints(horizontal4)
+        messageContainerView.addConstraints(vertical1)
+        messageContainerView.addConstraints(vertical2)
+        messageContainerView.addConstraints(horizontalArrow)
+        messageContainerView.addConstraints(verticalArrow)
     }
     
     override func setupSubviews() {
