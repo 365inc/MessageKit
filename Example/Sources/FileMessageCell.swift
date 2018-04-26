@@ -94,12 +94,12 @@ class FileMessageCell: MessageContentCell {
         arrowImageView.translatesAutoresizingMaskIntoConstraints = false
         let views = ["view": messageContainerView, "iconImageView": iconImageView, "fileNameLabel": fileNameLabel,
                      "expireLabel" : expireLabel, "sizeLabel": sizeLabel, "arrowImageView": arrowImageView]
-        let horizontal1 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[iconImageView(26)]", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let horizontal1 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[iconImageView(26)]", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
         let vertical1 = NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[iconImageView(26)]", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
-        let horizontal2 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-46-[fileNameLabel]-18-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let horizontal2 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-44-[fileNameLabel]-18-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
         let vertical2 = NSLayoutConstraint.constraints(withVisualFormat: "V:|-14-[fileNameLabel(18)]-4-[expireLabel(14)]-4-[sizeLabel(14)]", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
-        let horizontal3 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-46-[expireLabel]-18-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
-        let horizontal4 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-46-[sizeLabel]-18-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let horizontal3 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-44-[expireLabel]-18-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
+        let horizontal4 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-44-[sizeLabel]-18-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
         let horizontalArrow = NSLayoutConstraint.constraints(withVisualFormat: "H:[arrowImageView(7)]-10-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views)
         let verticalArrow = NSLayoutConstraint.constraints(withVisualFormat: "V:|-35.5-[arrowImageView(9)]", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
         messageContainerView.addConstraints(horizontal1)
