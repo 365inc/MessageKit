@@ -44,7 +44,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingCellTopLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
     public var outgoingCellTopLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
-    public var incomingCellBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
+    public var incomingCellBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets())
     public var outgoingCellBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
     public var incomingCellSideLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets())
