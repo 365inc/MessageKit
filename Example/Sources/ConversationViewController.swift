@@ -409,6 +409,14 @@ extension ConversationViewController: MessagesDisplayDelegate {
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1) : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
     }
+    
+    func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
+        let header = messagesCollectionView.dequeueReusableHeaderView(MessageDateHeaderView.self, for: indexPath)
+        header.dateLabel.text = "\(Date())"
+        header.dateLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        header.dateLabel.textColor = UIColor.white
+        return header
+    }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
@@ -454,9 +462,13 @@ extension ConversationViewController: MessagesDisplayDelegate {
 extension ConversationViewController: MessagesLayoutDelegate {
 
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 16
+        return 0
     }
 
+    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return isFromCurrentSender(message: message) ? 0 : 14
+    }
+    
 //<<<<<<< HEAD
 //    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
 //        if isFromCurrentSender(message: message) {
